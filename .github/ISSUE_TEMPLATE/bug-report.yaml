@@ -1,0 +1,22 @@
+name: "Bug Report"
+description: Describe the bug with a screenshot
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: Describe the bug with a screenshot
+       
+  - type: textarea
+    attributes:
+      label: Problem Description
+      description: A clear and concise description of what the problem is.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Screenshots
+      description: Add screenshots 
+    validations:
+      required: true
