@@ -10,30 +10,35 @@ You no longer have to pull your fingers to `Ctrl` to open the folder where the f
 - **Single-press:** open `.lnk` target folder *(folder where the program is located)*
 - **Hold:**             open the folder where the file is located
 ![](https://github.com/JoyHak/Flow-Launcher-windows-key/blob/main/Images/FlowHotkey%20destination.gif)
+
 If a non `.lnk` file is selected, both actions work the same way. So you can use single-press by default.
 
 If you need to open the file in an editor (e.g. Notepad) or any other application, press `Alt+Enter` **twice**. You can change the application or disable this option in the `tray`.
 ![](https://github.com/JoyHak/Flow-Launcher-windows-key/blob/main/Images/FlowHotkeys%20editor.gif)
-
 
 To use the Windows context menu, use `Shift+Enter` instead of `Alt+Enter`:
 - **Single-press:** open Flow Launcher context menu
 - **Twice:**            open Windows context menu
 - **Hold:**             run as admin
 
-Use the `Windows` key to open Flow Launcher:
+Use the `Windows` key to open Flow Launcher.
 
 - **Single-press:**  open Flow Launcher
 - **Twice:** open settings
 ![](https://github.com/JoyHak/Flow-Launcher-windows-key/blob/main/Images/WinKey.gif)
 
-To use shortcuts with the Windows key, you will have to hold it a little longer than usual *(300 ms)* until *“Win holded”* appears.
-> You can get around this limitation. If you have any AHK script, add this line to the beginning:
-> `~LWin::SendEvent("{Blind}{vkFF}")`
-> **This line must be outside `Flow Hotkeys` and must not be imported with `#Include`!**
-> Then replace [this line](https://github.com/JoyHak/Flow-Launcher-windows-key/blob/a89fca5b352daec6a19d5354b4bcca99317a1d9e/FlowHotkeys.ahk#L24) in `Flow Hotkeys` with:
-> `FlowLauncher.add("LWin",  LWin_FlowLauncher,  "",,,, "~")`
-> 
+To use shortcuts with the Windows key, you will have to hold it a little longer than usual *(300 ms)* until *“Win holded”* appears.<br/>
+> **You can get around this limitation**. If you have any AHK script, add this line to the beginning:
+> ```haskell
+> ~LWin::SendEvent("{Blind}{vkFF}")
+> ```
+> **This line must be outside `Flow Hotkeys` and must not be imported with `#Include`!**<br/>
+> <br/>
+> Then replace https://github.com/JoyHak/Flow-Launcher-windows-key/blob/a89fca5b352daec6a19d5354b4bcca99317a1d9e/FlowHotkeys.ahk#L24 with:<br/>
+> ```haskell
+> FlowLauncher.add("LWin",  LWin_FlowLauncher,  "",,,, "~")
+> ```
+> <br/>
 > You can also reduce the `tapTime` and `holdTime` values to speed up the keys. In this case you need to press twice very fast. 
 >**`tapTime` should be at least 50ms less than `holdTime`!**
 
