@@ -41,6 +41,8 @@ To use shortcuts with the Windows key, you will have to hold it a little longer 
 > <br/>
 > You can also reduce the `tapTime` and `holdTime` values to speed up the keys. In this case you need to press twice very fast. 
 >**`tapTime` should be at least 50ms less than `holdTime`!**
+</br>
+The script starts automatically after Windows Log-on. You can disable this option via the `Tray`.
 
 ### ShowTargets
 
