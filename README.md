@@ -73,9 +73,9 @@ This script is written in the [Autohotkey language](https://en.m.wikipedia.org/w
 2. When the installation is complete, you are presented with another menu. Choose `Run AutoHotkey`.
 Once the AutoHotkey help file opens, you can read or close it now. 
 
-3. [Download](https://github.com/JoyHak/Flow-Launcher-windows-key/releases) the latest version of required archive.
+3. [Download](https://github.com/JoyHak/Flow-Launcher-windows-key/releases) the required version of `Source code.zip`.
 
-4.  Unpack `.zip` and run `.ahk`. Check it's existence in the tray.
+4.  Unpack `.zip` and run required `.ahk` script. Check it's existence in the tray. You can change icon in `Libs\`.
 
 ### Compiling	
 
