@@ -1,125 +1,79 @@
-command(FuncObj, *) {
-	if (WinActive("ahk_class Notepad++")) {
-		FuncObj.call()		
-	}	
-}
-Hotkey "~^s",  command.bind(Reload)
-Hotkey "^Esc", command.bind(ExitApp)
-
-; Setup configuration .ini file
-ScriptName := ""
-ConfigDir  := "Config"
-
-SplitPath A_ScriptFullPath, , , , &ScriptName
-INI := ConfigDir "\" ScriptName ".ini"
-
-if !DirExist(ConfigDir)
-	DirCreate ConfigDir
-if !FileExist(INI)
-	FileAppend "", INI
-ScriptName := ""
-
 /*
 ╭────────────✧⭑────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-|	Keys history (for Win testing)
+|	Globals
+|   thats why I dont like CamelCase...
 ╰───•✧⭑─────⭑─────────────────── ✧.·:·.*───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 */
 
-History 	 := IniRead(INI, "Global", "KeyHistory", false)
-HistoryTitle := "&Enable KeyHistory"
+AutoDestroyCurrent 	    := IniRead(INI, "Global", "AutoDestroyCurrent", true)
+AutoDestroyOther 	    := IniRead(INI, "Global", "AutoDestroyOther", false)
+AutoDestroyCurrentTitle := "Hide after &click"
+AutoDestroyOtherTitle   := "Hide &old menus"
 
-ShowHistory(*) {
-	global History
+/*
+╭────────────✧⭑────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+|	Toggle tray menu
+╰───•✧⭑─────⭑─────────────────── ✧.·:·.*───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+*/
 
-	if History
-		KeyHistory
+ValidateAutoDestroyCurrent() {
+	global AutoDestroyCurrent
+
+	if AutoDestroyCurrent
+		A_TrayMenu.Check(AutoDestroyCurrentTitle)
 	else
-		TrayTip "KeyHistory disabled", A_ScriptName, "Icon!"
+		A_TrayMenu.UnCheck(AutoDestroyCurrentTitle)
 }
 
-ValidateHistory() {
-	global History
+ValidateAutoDestroyOther() {
+	global AutoDestroyOther
 
-	if History {
-		A_TrayMenu.Check(HistoryTitle)
-		KeyHistory 500
-	} else {
-		A_TrayMenu.UnCheck(HistoryTitle)
-		KeyHistory 0
-	}
+	if AutoDestroyOther
+		A_TrayMenu.Check(AutoDestroyOtherTitle)
+	else 
+		A_TrayMenu.UnCheck(AutoDestroyOtherTitle)
 }
-
-HistoryToggle(*) {
-	global History
-
-	History := !History
-	IniWrite(History, INI, "Global", "KeyHistory")
-	ValidateHistory()
-}
-
-A_TrayMenu.Insert("1&", "Show KeyHistory", 	 ShowHistory)
-A_TrayMenu.Insert("1&", HistoryTitle, 		 HistoryToggle, 	"Radio")
-ValidateHistory()
 
 /*
 ╭────────────✧⭑────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-|	AutoStartup
+|	Change and write values
 ╰───•✧⭑─────⭑─────────────────── ✧.·:·.*───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 */
 
-AutoStartup 	 := IniRead(INI, "Global", "AutoStartup", true)
-AutoStartupTitle := "Enable &AutoStartup"
+AutoDestroyCurrentToggle(*) {
+	global AutoDestroyCurrent
 
-ValidateAutoStartup() {
-	global AutoStartup
-
-	link := A_Startup "\" A_ScriptName ".lnk"
-	if AutoStartup {
-		A_TrayMenu.Check(AutoStartupTitle)
-		if !FileExist(link) {
-			FileCreateShortcut(A_ScriptFullPath, link, A_WorkingDir)
-			TrayTip "AutoStartup enabled", A_ScriptName
-		}
-	} else {
-		A_TrayMenu.UnCheck(AutoStartupTitle)
-		if FileExist(link) {
-			FileDelete(link)
-			TrayTip "AutoStartup disabled", A_ScriptName, "Icon!"
-		}
-	}
+	AutoDestroyCurrent := !AutoDestroyCurrent
+	IniWrite(AutoDestroyCurrent, INI, "Global", "AutoDestroyCurrent")
+	ValidateAutoDestroyCurrent()
+    
+    if AutoDestroyCurrent
+        TrayTip "The menu will disappear after clicking on the link", A_ScriptName
+	else
+        TrayTip "The menu will remain after clicking on the link", A_ScriptName, "Iconi"
 }
 
-AutoStartupToggle(*) {
-	global AutoStartup
+AutoDestroyOtherToggle(*) {
+	global AutoDestroyOther
 
-	AutoStartup := !AutoStartup
-	IniWrite(AutoStartup, INI, "Global", "AutoStartup")
-	ValidateAutoStartup()
+	AutoDestroyOther := !AutoDestroyOther
+	IniWrite(AutoDestroyOther, INI, "Global", "AutoDestroyOther")
+	ValidateAutoDestroyOther()
+    
+    if AutoDestroyOther
+        TrayTip "Once the new menu is started, the old menus will disappear", A_ScriptName
+	else
+        TrayTip "The previous menus will remain on the screen", A_ScriptName, "Iconi"
 }
-
-A_TrayMenu.Insert("1&", AutoStartupTitle, AutoStartupToggle, "Radio")
-ValidateAutoStartup()
 
 /*
 ╭────────────✧⭑────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-|	Functions
+|	Setup tray menu and init validators
 ╰───•✧⭑─────⭑─────────────────── ✧.·:·.*───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 */
 
-ShowTooltip(text) {
-	ToolTip Format("{}", text)
-    SetTimer ToolTip, -2000
-}
+A_TrayMenu.Insert("3&", AutoDestroyCurrentTitle, AutoDestroyCurrentToggle, "Radio")
+A_TrayMenu.Insert("4&", AutoDestroyOtherTitle, AutoDestroyOtherToggle, "Radio")
 
-ShowHotkey(taps, state) {
-    ; Show key, info about action
-
-    ; hold press => "HOLD (time)"; single press => "TAP"
-	action := state == -1 ? "TAP" : Format("HOLD ({}ms)", A_TimeSincePriorHotkey)
-
-    stats := Format("{} `n {} `n Taps: {} `n State: {}",
-					 A_PriorHotkey, action, taps, state)
-
-    ShowTooltip(stats)
-    sleep 2000
-}
+ValidateAutoDestroyCurrent()
+ValidateAutoDestroyOther()
