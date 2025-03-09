@@ -36,7 +36,7 @@ To use shortcuts with the Windows key, you will have to hold it a little longer 
 > ```
 > **This line must be outside `Flow Hotkeys` and must not be imported with `#Include`!**<br/>
 > <br/>
-> Then replace https://github.com/JoyHak/Flow-Launcher-windows-key/blob/a89fca5b352daec6a19d5354b4bcca99317a1d9e/FlowHotkeys.ahk#L24 with:<br/>
+> Then replace https://github.com/JoyHak/Flow-Launcher-windows-key/blob/0c707ba119a0faf2ec034cc977433b9f1c2cf5c7/FlowHotkeys-1.1.ahk#L36 with:<br/>
 > ```haskell
 > FlowLauncher.add("LWin",  LWin_FlowLauncher,  "",,,, "~")
 > ```
