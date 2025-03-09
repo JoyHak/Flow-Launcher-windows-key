@@ -48,7 +48,7 @@ To use shortcuts with the Windows key, you will have to hold it a little longer 
 
 If you are not comfortable using the keys, this menu allows to open the destination folder of the `.lnk` file or target url of the `.url` file; Also you can open the folder where the `.lnk` or `.url` file itself is located. 
 ![](https://github.com/JoyHak/Flow-Launcher-windows-key/blob/main/Images/ShowTargets.gif)
-If another file is selected, the folder where the file is located will be opened. The menu is accessed by pressing `Alt+Enter`.
+If another file is selected, the folder where the file is located will be opened. The menu is accessed by pressing `Alt+Enter`. The behavior of current and previous menus can be changed in `Tray`. For example, you can leave the menu after clicking a link.
 
 ### Installation
 
