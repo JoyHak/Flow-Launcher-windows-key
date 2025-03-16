@@ -1,18 +1,14 @@
-;@Ahk2Exe-Base C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe, %A_ScriptDir%\Releases\%A_ScriptName~\.ahk%-x64.exe 
 ;@Ahk2Exe-Base C:\Program Files\AutoHotkey\v2\AutoHotkey32.exe, %A_ScriptDir%\Releases\%A_ScriptName~\.ahk%-x32.exe 
+;@Ahk2Exe-Base C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe, %A_ScriptDir%\Releases\%A_ScriptName~\.ahk%-x64.exe 
 
 ;@Ahk2Exe-SetVersion %A_ScriptName~[^\d\.]+%
 ;@Ahk2Exe-SetMainIcon Libs\win.ico
-;@Ahk2Exe-SetDescription Flow Launcher: single/double press or hold a hotkey. One hotkey - three actions
+;@Ahk2Exe-SetDescription https://github.com/JoyHak/Flow-Launcher-windows-key
 ;@Ahk2Exe-SetCopyright Rafaello
 ;@Ahk2Exe-SetLegalTrademarks GPL-3.0 license
 ;@Ahk2Exe-SetCompanyName ToYu studio
 
-/*
-    Remap some Flow Launcher keys
-    By Rafaello: https://github.com/JoyHak/Flow-Launcher-windows-key
-    GPL-3.0 license
-*/
+;Remap some Flow Launcher keys
 
 #Requires AutoHotkey v2.0
 #SingleInstance force
