@@ -72,28 +72,33 @@ AutoStartupTitle := "Enable &AutoStartup"
 
 ValidateAutoStartup() {
 	global AutoStartup
+	
+    nameNoExtension := SubStr(A_ScriptName, 1, -4)
+    ; Delete version and CPU architecture
+    nameClean := RegExReplace(nameNoExtension, "-x?(32|64)|-\d+\.\d+(.\d+)?")
+	mask := A_Startup "\" nameClean "*"	
+    link := A_Startup "\" nameNoExtension ".lnk"
 
-	link := A_Startup "\" A_ScriptName ".lnk"
 	if AutoStartup {
 		A_TrayMenu.Check(AutoStartupTitle)
 		if !FileExist(link) {
+            ; Clear every possible script instances from Startup dir
+            FileDelete(mask)
 			FileCreateShortcut(A_ScriptFullPath, link, A_WorkingDir)
 			TrayTip "AutoStartup enabled", A_ScriptName
 		}
 	} else {
 		A_TrayMenu.UnCheck(AutoStartupTitle)
-		if FileExist(link) {
-			FileDelete(link)
-			TrayTip "AutoStartup disabled", A_ScriptName, "Icon!"
-		}
+		FileDelete(mask)
+		TrayTip "AutoStartup disabled", A_ScriptName, "Icon!"
 	}
 }
 
 AutoStartupToggle(*) {
 	global AutoStartup
-
-	AutoStartup := !AutoStartup
-	IniWrite(AutoStartup, INI, "Global", "AutoStartup")
+	
+	AutoStartup := !AutoStartup	
+	IniWrite(AutoStartup, INI, "Global", "AutoStartup")	
 	ValidateAutoStartup()
 }
 
